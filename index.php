@@ -1,42 +1,58 @@
 <?php
 //1. Criando uma Classe para Gerenciar Contas Bancárias
 
-class ContaBancaria
-{
-    public $titular;
-    public $saldo;
+<?php
 
-    public function __construct($titular, $saldo = 0)
+    class ContaBancaria
     {
-        $this->titular = $titular;
-        $this->saldo = $saldo = 0;
-    }
-    public function depositar($valor)
-    {
-        echo $this->saldo += $valor;
-    }
+        private $nome_titular;
+        private $saldo;
 
-    public function sacar($valor)
-    {
-        if ($valor <= $this->saldo) {
-            $this->saldo -= $valor; // o saldo atual menos o novo valor
-        } else {
-            echo "Saldo insuficiente<br><br>";
+        public function __construct($nome, $saldo = 0)
+        {
+            $this->nome_titular = $nome;
+            $this->saldo = $saldo;
+        }
+
+        public function depositar($valor)
+        {
+            $this->saldo += $valor;
+        }
+
+        public function sacar($valor)
+        {
+            if ($valor <= $this->saldo) {
+                $this->saldo -= $valor;
+            } else {
+                echo "$this->nome_titular seu saldo é insuficiente<br>";
+            }
+        }
+
+        public function verificarSaldo()
+        {
+            echo "$this->nome_titular, sua conta tem: R$ " . $this->saldo . "<br>";
         }
     }
 
-    public function verificarSaldo()
-    {
-        return $this->saldo;
-    }
-}
-$conta = new ContaBancaria("fulano", 100);
-echo "<pre>";
-var_dump($conta);
-echo "</pre>";
-$conta ->depositar(10);
-$conta->sacar(10);
-echo 'O saldo da conta é:' .($conta-> verificarSaldo() );
+    $conta1 = new ContaBancaria('Fulano');
+    $conta2 = new ContaBancaria('Maria', 500);
+
+    $conta1->verificarSaldo();
+    $conta2->verificarSaldo();
+    echo "<br>";
+    $conta1->depositar(100);
+    $conta2->depositar(50);
+    echo "<br>";
+    $conta1->verificarSaldo();
+    $conta2->verificarSaldo();
+    echo "<br>";
+    $conta1->sacar(5000);
+    $conta2->sacar(10);
+    echo "<br>";
+    $conta1->verificarSaldo();
+    $conta2->verificarSaldo();
+
+    
 
 
 
@@ -78,6 +94,7 @@ echo $produto3->exibirInformacoes() . "<br>";
 // Acessando e modificando os atributos diretamente
 $produto1->preco = 160.00;
 echo "Novo preço da Cadeira: R$ " . $produto1->preco . "<br>";
+echo "<br>";
 ?>
 
 <?php
@@ -139,12 +156,16 @@ class Moto extends Veiculo {
 }
 
 // Criando instâncias das classes Carro e Moto
+echo "<br>";
 $carro = new Carro("Toyota", "Corolla", 2022, "V6");
+echo "<br>";
 $moto = new Moto("Honda", "CB500F", 2023, 500);
+echo "<br>";
 
 // Exibindo as informações de cada veículo
 echo $carro->informacoes() . "<br>";
 echo $moto->informacoes() . "<br>";
+echo "<br>";
 ?>
 
 <?php
@@ -153,45 +174,66 @@ echo $moto->informacoes() . "<br>";
 class Calculadora {
     // Método estático para somar dois números
     public static function somar($a, $b) {
-        return $a + $b;
+        return $a + $b. "<br>";
     }
 
     // Método estático para subtrair dois números
     public static function subtrair($a, $b) {
-        return $a - $b;
+        return $a - $b. "<br>";
     }
 }
 
 // Usando os métodos estáticos da classe Calculadora
 $num1 = 10;
 $num2 = 5;
-
+echo "<br>";
 $soma = Calculadora::somar($num1, $num2);
 $subtracao = Calculadora::subtrair($num1, $num2);
-
+echo "<br>";
 // Exibindo os resultados
 echo "A soma de {$num1} e {$num2} é: {$soma}<br>";
+echo "<br>";
 echo "A subtração de {$num1} e {$num2} é: {$subtracao}<br>";
+echo "<br>";
 ?>
+
 <?php
-//questão 5 
-//Crie uma interface chamada TransportInterface com os seguintes métodos:
-//andar()
-//parar()
-//Implemente essa interface em uma classe chamada Carro e em uma classe chamada Bicicleta. 
-//Cada implementação deve exibir uma mensagem apropriada para o método correspondente.
+namespace questão5;
+//questao 5
 
-namespace questão5
+   interface TransportInterface {
+    public function andar();
+    public function parar();
+   }
 
-interface transportInterface {
-    public function andar ();
-    public function parar ();
-}
-class carro implements transportInterface {
+   class Carro implements TransportInterface {
+    public function andar()
+    {
+        echo "Acelerando Vrum Vrum<br>";
+    }
 
-}
+    public function parar(){
+        echo "Freada<br>";
+    }
+   }
 
-class bicicleta implements transportInterface {
+   class Bicicleta implements TransportInterface {
+    public function andar()
+    {
+        echo "Pedalando<br>";
+    }
 
-}
-?>
+    public function parar(){
+        echo "Cavalo de Pau<br>";
+    }
+   }
+
+   $carro = new Carro();
+   $carro->andar();
+   $carro->parar();
+   echo "<hr>";
+   $bici = new Bicicleta();
+   $bici->andar();
+   $bici->parar();
+
+   ?>
